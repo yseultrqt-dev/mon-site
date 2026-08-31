@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yseult Djohra | Développeuse Fullstack & Musicienne</title>
+    <meta name="description" content="Développeuse Web Fullstack et musicienne, guitariste, Yseult Djohra fusionne rigueur technique et univers post-punk. Création d'interfaces web robustes, propres et optimisées SEO. Découvrez mon parcours hybride, du code à la scène, pour des projets web uniques.">
+    <link rel="canonical" href="https://www.yseultdjohra.fr/">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <meta name="robots" content="index,follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yseultdjohra.fr/">
+    <meta property="og:title" content="Yseult Djohra | Développeuse Fullstack & Musicienne">
+    <meta property="og:description" content="Développeuse Web Fullstack & Musicienne. Allier rigueur technique et univers visuel post-punk. Conception de sites web uniques, performants et centrés sur l'utilisateur.">
+    <link rel="preload" href="fonts/Trickster-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Director-Light.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Basalte-Fond.woff2" as="font" type="font/woff2" crossorigin>
+    <link href="dist/output.css" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'Trickster';
+            src: url('fonts/Trickster-Regular.woff2') format('woff2'),
+                 url('fonts/Trickster-Regular.woff') format('woff'),
+                 url('fonts/Trickster-Reg.otf') format('opentype'),
+                 url('fonts/Trickster-Reg.ttf') format('truetype');
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Director-Light';
+            src: url('fonts/Director-Light.woff2') format('woff2'),
+                 url('fonts/Director-Light.woff') format('woff'),
+                 url('fonts/Director-Light.otf') format('opentype'),
+                 url('fonts/Director-Light.ttf') format('truetype');
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Basalte';
+            src: url('fonts/Basalte-Fond.woff2') format('woff2'),
+                 url('fonts/Basalte-Fond.woff') format('woff'),
+                 url('fonts/Basalte-Fond.otf') format('opentype'),
+                 url('fonts/Basalte-Fond.ttf') format('truetype');
+            font-style: normal;
+            font-display: swap;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+        body {
+            font-family: 'Director-Light', sans-serif;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-family: 'Trickster', sans-serif; }
+        h2 { font-family: 'Trickster', sans-serif; }
+        h3, h4 { font-family: 'Basalte', sans-serif; }
+        h5 { font-family: 'Director-Light', sans-serif; }
+        p, li { font-family: 'Director-Light', sans-serif; }
+
+        .header-full {
+            height: 100vh;
+            height: 100svh;
+        }
+
+        .preview-container { touch-action: manipulation; }
+        .preview-container img {
+            will-change: transform;
+            transition: transform 8s ease-in-out;
+            transform: translateY(0);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .preview-container:hover img {
+                transform: translateY(calc(-100% + 400px));
+            }
+        }
+
+        #lightbox-img { max-height: 90vh; object-fit: contain; }
+
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 16px; height: 16px;
+            background: #d1d1d1;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease, border-radius 0.2s ease;
+            mix-blend-mode: difference;
+            display: none;
+        }
+        #custom-cursor.enlarged {
+            width: 40px;
+            height: 40px;
+        }
+
+        .cursor-eye { cursor: url("cursors/eye-punk.svg") 24 24, crosshair; }
+
+        .text-fluid-xs {
+            font-size: clamp(10px, 1.5vw, 13px);
+        }
+        .text-fluid-sm {
+            font-size: clamp(11px, 1.8vw, 14px);
+        }
+
+        @media (max-width: 640px) {
+            #nom { display: inline-block; font-size: 3rem; }
+        }
+
+        @media (max-width: 767px) {
+            .text-shadow-mobile {
+                text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+            }
+        }
+    </style>
+
+</head>
+
+<body class="bg-white antialiased">
+
+    <div id="custom-cursor" aria-hidden="true"></div>
+
+    <header class="header-full relative w-full bg-[#0d0d0d] text-[#d1d1d1] p-4 md:p-8 overflow-hidden flex flex-col">
+        <div class="absolute top-0 left-0 w-full h-2 bg-[#d1d1d1] opacity-20 shadow-[0_10px_20px_rgba(209,209,209,0.1)]"></div>
+
+        <div class="relative z-10 grid grid-cols-12 flex-grow border-x border-white/5">
+
+            <nav class="col-span-12 md:col-span-3 border-b md:border-b-0 md:border-r border-white/10 p-4 font-director" aria-label="Navigation principale">
+                <ul class="flex flex-col gap-4 text-[10px] md:text-[11px] tracking-tighter uppercase leading-none">
+                    <li><a href="#web" class="hover:bg-[#d1d1d1] hover:text-black p-1 uppercase transition-all inline-block">01_Réalisations_web</a></li>
+                    <li><a href="#music" class="hover:bg-[#d1d1d1] hover:text-black p-1 uppercase transition-all inline-block">02_Projets_musicaux</a></li>
+                    <li><a href="#about" class="hover:bg-[#d1d1d1] hover:text-black p-1 uppercase transition-all inline-block">03_À_propos</a></li>
+                    <li class="pt-8 text-white/20 italic lowercase"></li>
+                </ul>
+            </nav>
+
+            <div class="col-span-12 md:col-span-9 flex flex-col justify-center p-4 md:p-12 relative">
+                <h1 class="relative z-20 text-7xl md:text-[14vw] leading-[0.8] tracking-tighter mix-blend-difference">
+                    Yseult<br><span id="nom" class="md:ml-24">Djohra</span>
+                </h1>
+
+                <div class="absolute right-0 bottom-10 md:right-12 md:top-1/3 md:-translate-y-1/2 w-full z-10 opacity-40 grayscale contrast-125 mix-blend-lighten pointer-events-none transition-opacity duration-1000 hover:opacity-60">
+                    <img src="img/photo-accueil.jpg" alt="Yseult sur scène" class="w-full h-auto object-cover">
+                </div>
+
+                <div class="relative z-20 mt-8 max-w-sm border-l-2 border-[#d1d1d1] pl-4 font-director">
+                    <p class="text-[10px] sm:text-[11px] md:text-[10px] xl:text-[11px] 2xl:text-sm uppercase tracking-widest leading-relaxed opacity-70 whitespace-nowrap">
+                        Développeuse Web Fullstack –<br>
+                        Musicienne-Artiste-Compositrice –<br>
+                        Guitariste de session.<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 pointer-events-none mix-blend-overlay opacity-30 bg-noise"></div>
+    </header>
+
+    <main class="max-w-4xl lg:max-w-5xl mx-auto px-6 py-20 md:py-32">
+
+        <!-- SECTION WEB -->
+        <section id="web" class="p-8 bg-[#0a0a0a] text-white">
+
+            <h2 class="font-director uppercase tracking-[0.3em] text-xl md:text-3xl mb-12 md:mb-20 text-gray-400">
+                Réalisations Web
+            </h2>
+
+            <!-- Projet 1 -->
+            <div class="group relative border-r border-b border-white/10 overflow-hidden bg-[#0d0d0d]">
+                <div class="p-4 md:p-6 border-t border-white/5">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-tighter max-w-[70%] leading-tight">
+                            Développement Full-Stack, Webdesign
+                        </span>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs border border-white/20 px-1 font-medium">2026</span>
+                    </div>
+                    <h4 class="text-lg md:text-xl mb-4 uppercase tracking-tighter leading-tight">Système de réservation en ligne - Une Voix Pour Chanter</h4>
+                    <div class="pt-2 border-t border-white/5">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-widest leading-relaxed">
+                            Conception d'une application métier en Vanilla PHP/SQL. Implémentation d'une logique de réservation dynamique avec synchronisation bidirectionnelle via API Google Calendar et automatisation des processus de paiement (Webhooks & Flux chiffrés) via API Stripe.
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-end mt-3">
+                        <a href="https://unevoixpourchanter.com/espace-membre.html" target="_blank" rel="noopener noreferrer" aria-label="Voir le projet Système de réservation" class="text-[10px] border-b border-current pb-1 hover:text-white transition-colors">Lien</a>
+                    </div>
+                </div>
+                <!-- Preview : clic desktop = lightbox, clic mobile = scroll -->
+                <div class="preview-container relative h-[250px] md:h-[400px] overflow-hidden bg-black"
+                     data-lightbox="true">
+                    <img src="photos/site-resa.png"
+                         class="absolute top-0 left-0 w-full grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-[filter] duration-700"
+                         alt="Aperçu du système de réservation en ligne"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 flex items-center justify-center pointer-events-none">
+                        <span class="font-director text-[10px] tracking-[0.4em] opacity-0 group-hover:opacity-100 uppercase bg-white text-black px-4 py-2">Prévisualisation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-16" aria-hidden="true">
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/80 to-transparent blur-[1px]"></div>
+            </div>
+
+            <!-- Projet 2 -->
+            <div class="group relative border-r border-b border-white/10 overflow-hidden bg-[#0d0d0d]">
+                <div class="p-4 md:p-6 border-t border-white/5">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-tighter max-w-[70%] leading-tight">
+                            Développement Front-End et Webdesign
+                        </span>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs border border-white/20 px-1 font-medium">2026</span>
+                    </div>
+                    <h4 class="text-lg md:text-xl mb-4 uppercase tracking-tighter leading-tight">Réalisation site internet - François Charfe</h4>
+                    <div class="pt-2 border-t border-white/5">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-widest leading-relaxed">
+                            Socle Vanilla PHP/JS/HTML + Tailwind. Création d'une identité numérique sur-mesure pour un artisan d'art, axée sur la mise en valeur esthétique des œuvres et la clarté du parcours utilisateur.
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-end mt-3">
+                        <a href="https://charfeatelier.fr" target="_blank" rel="noopener noreferrer" aria-label="Voir le site internet de François Charfe - Artiste Artisan" class="text-[10px] border-b border-current pb-1 hover:text-white transition-colors">Lien</a>
+                    </div>
+                </div>
+                <div class="preview-container relative h-[250px] md:h-[400px] overflow-hidden bg-black"
+                     data-lightbox="true">
+                    <img src="photos/site-francois-charfe.png"
+                         class="absolute top-0 left-0 w-full grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-[filter] duration-700"
+                         alt="Aperçu du site de François Charfe"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 flex items-center justify-center pointer-events-none">
+                        <span class="font-director text-[10px] tracking-[0.4em] opacity-0 group-hover:opacity-100 uppercase bg-white text-black px-4 py-2">Prévisualisation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-16" aria-hidden="true">
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/80 to-transparent blur-[1px]"></div>
+            </div>
+
+            <!-- Projet 3 -->
+            <div class="group relative border-r border-b border-white/10 overflow-hidden bg-[#0d0d0d]">
+                <div class="p-4 md:p-6 border-t border-white/5">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-tighter max-w-[70%] leading-tight">
+                            Développement Front-End et Webdesign
+                        </span>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs border border-white/20 px-1 font-medium">2026</span>
+                    </div>
+                    <h4 class="text-lg md:text-xl mb-4 uppercase tracking-tighter leading-tight">Réalisation site internet - Le Toboggan</h4>
+                    <div class="pt-2 border-t border-white/5">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-widest leading-relaxed">
+                            Socle Vanilla PHP/JS/HTML + Tailwind. Développement d'une interface vitrine interactive et optimisée (Core Web Vitals).
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-end mt-3">
+                        <a href="https://letobogganmalakoff.fr" target="_blank" rel="noopener noreferrer" aria-label="Voir le site internet du Toboggan - Tiers lieu à Malakoff" class="text-[10px] border-b border-current pb-1 hover:text-white transition-colors">Lien</a>
+                    </div>
+                </div>
+                <div class="preview-container relative h-[250px] md:h-[400px] overflow-hidden bg-black"
+                     data-lightbox="true">
+                    <img src="photos/site-toboggan.png"
+                         class="absolute top-0 left-0 w-full grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-[filter] duration-700"
+                         alt="Aperçu du site Le Toboggan Malakoff"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 flex items-center justify-center pointer-events-none">
+                        <span class="font-director text-[10px] tracking-[0.4em] opacity-0 group-hover:opacity-100 uppercase bg-white text-black px-4 py-2">Prévisualisation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-16" aria-hidden="true">
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/80 to-transparent blur-[1px]"></div>
+            </div>
+
+            <!-- Projet 4 -->
+            <div class="group relative border-r border-b border-white/10 overflow-hidden bg-[#0d0d0d]">
+                <div class="p-4 md:p-6 border-t border-white/5">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-tighter max-w-[70%] leading-tight">
+                            Développement Front-End, Intégration et Responsivité
+                        </span>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs border border-white/20 px-1 font-medium">2025</span>
+                    </div>
+                    <h4 class="text-lg md:text-xl mb-4 uppercase tracking-tighter leading-tight">Refonte site internet - Musiques Tangentes</h4>
+                    <div class="pt-2 border-t border-white/5">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-widest leading-relaxed">
+                            Reconstruction intégrale du Front-End en HTML5/CSS3 natif selon une charte graphique existante. Développement d'un module Back-End en PHP pour la gestion sécurisée des formulaires de contact et de candidature (traitement des données côté serveur, validation des entrées et routage des mails).
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-end mt-3">
+                        <a href="https://musiques-tangentes.asso.fr" target="_blank" rel="noopener noreferrer" aria-label="Voir le site internet de Musiques Tangentes" class="text-[10px] border-b border-current pb-1 hover:text-white transition-colors">Lien</a>
+                    </div>
+                </div>
+                <div class="preview-container relative h-[250px] md:h-[400px] overflow-hidden bg-black"
+                     data-lightbox="true">
+                    <img src="photos/site-mustang.png"
+                         class="absolute top-0 left-0 w-full grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-[filter] duration-700"
+                         alt="Aperçu du site Musiques Tangentes"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 flex items-center justify-center pointer-events-none">
+                        <span class="font-director text-[10px] tracking-[0.4em] opacity-0 group-hover:opacity-100 uppercase bg-white text-black px-4 py-2">Prévisualisation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-16" aria-hidden="true">
+                <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/80 to-transparent blur-[1px]"></div>
+            </div>
+
+            <!-- Projet 5 -->
+            <div class="group relative border-r border-b border-white/10 overflow-hidden bg-[#0d0d0d]">
+                <div class="p-4 md:p-6 border-t border-white/5">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-tighter max-w-[70%] leading-tight">
+                            Développement Full-Stack et Intégration
+                        </span>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs border border-white/20 px-1 font-medium">2025</span>
+                    </div>
+                    <h4 class="text-lg md:text-xl mb-4 uppercase tracking-tighter leading-tight">Refonte site internet - Alix Buronfosse</h4>
+                    <div class="pt-2 border-t border-white/5">
+                        <span class="text-fluid-xs opacity-50 uppercase tracking-widest leading-relaxed">
+                            Socle Vanilla PHP/JS/CSS. Implémentation d'une logique de traitement de formulaires sécurisés en PHP.
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-end mt-3">
+                        <a href="https://unevoixpourchanter.com/" target="_blank" rel="noopener noreferrer" aria-label="Voir le site internet d'Alix Buronfosse - Coach vocal" class="text-[10px] border-b border-current pb-1 hover:text-white transition-colors">Lien</a>
+                    </div>
+                </div>
+                <div class="preview-container relative h-[250px] md:h-[400px] overflow-hidden bg-black"
+                     data-lightbox="true">
+                    <img src="photos/site-alix.png"
+                         class="absolute top-0 left-0 w-full grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-[filter] duration-700"
+                         alt="Aperçu du site Alix Buronfosse"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 flex items-center justify-center pointer-events-none">
+                        <span class="font-director text-[10px] tracking-[0.4em] opacity-0 group-hover:opacity-100 uppercase bg-white text-black px-4 py-2">Prévisualisation</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="p-16 border border-white/10" role="separator" aria-hidden="true"></div>
+
+        <!-- SECTION MUSIQUE -->
+        <section id="music" class="p-8 bg-[#0a0a0a] text-white">
+            <h2 class="font-director uppercase tracking-[0.3em] text-3xl mb-20 text-gray-400">Projets musicaux</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-white/10">
+
+                <!-- Djohra -->
+                <div class="group md:col-span-2 lg:col-span-3 border-r border-b border-white/10 p-6 md:p-10 lg:p-10 hover:bg-[#d1d1d1] hover:text-black transition-colors duration-300 cursor-crosshair bg-white/[0.02]">
+                    <div class="flex justify-between items-start mb-12">
+                        <span class="font-director text-[10px] opacity-50 uppercase tracking-tighter">Autrice, compositrice, guitariste, chanteuse</span>
+                        <span class="font-director text-[9px] xl:text-[11px] 2xl:text-xs px-1 border border-current">2019 - PRÉSENT</span>
+                    </div>
+                    <h4 class="text-6xl md:text-8xl lg:text-8xl mb-12 leading-none group-hover:scale-[1.02] transition-transform duration-500 origin-left">
+                        Djohra
+                    </h4>
+                    <div class="flex justify-between items-end font-director">
+                        <a href="https://djohra.bandcamp.com" target="_blank" rel="noopener noreferrer" aria-label="Voir le Bandcamp de Djohra" class="text-[10px] uppercase tracking-widest border-b border-current md:pb-0.5 hover:pb-2 transition-all">
+                            Explorer l'univers
+                        </a>
+                        <span class="text-[11px] uppercase opacity-60 tracking-[0.2em]">Art rock / Post-punk</span>
+                    </div>
+                </div>
+
+                <!-- Warmest Cyan -->
+                <div class="group border-r border-b border-white/10 p-6 hover:bg-[#d1d1d1] hover:text-black transition-colors duration-300 cursor-crosshair">
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="font-director text-[10px] opacity-50 uppercase">Guitariste / Pianiste</span>
+                        <span class="font-director text-[9px] xl:text-[11px] 2xl:text-xs px-1 border border-current">2025-</span>
+                    </div>
+                    <h4 class="text-3xl mb-8 leading-none">Warmest Cyan</h4>
+                    <div class="flex justify-between items-end font-director">
+                        <a href="https://www.instagram.com/warmestcyan" target="_blank" rel="noopener noreferrer" aria-label="Visiter l'instagram de Warmest Cyan" class="text-[9px] xl:text-[11px] 2xl:text-xs uppercase tracking-widest border-b border-current">Lien</a>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs uppercase opacity-60">Pop, Folk</span>
+                    </div>
+                </div>
+
+                <!-- YTSO & Wayne -->
+                <div class="group border-r border-b border-white/10 p-6 hover:bg-[#d1d1d1] hover:text-black transition-colors duration-300 cursor-crosshair">
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="font-director text-[10px] opacity-50 uppercase">Guitariste / Bassiste</span>
+                        <span class="font-director text-[9px] xl:text-[11px] 2xl:text-xs px-1 border border-current">2026-</span>
+                    </div>
+                    <h4 class="text-3xl mb-8 leading-none">YTSO & Wayne</h4>
+                    <div class="flex justify-between items-end font-director">
+                        <a href="https://ytsoandwayne.bandcamp.com/" target="_blank" rel="noopener noreferrer" aria-label="Voir le bandcamp de YTSO & Wayne" class="text-[9px] xl:text-[11px] 2xl:text-xs uppercase tracking-widest border-b border-current">Lien</a>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs uppercase opacity-60">Rock Alternatif</span>
+                    </div>
+                </div>
+
+                <!-- Neon Bay -->
+                <div class="group border-r border-b border-white/10 p-6 hover:bg-[#d1d1d1] hover:text-black transition-colors duration-300 cursor-crosshair">
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="font-director text-[10px] opacity-50 uppercase">Guitariste</span>
+                        <span class="font-director text-[9px] xl:text-[11px] 2xl:text-xs px-1 border border-current">2026-</span>
+                    </div>
+                    <h4 class="text-3xl mb-8 leading-none">Neon Bay</h4>
+                    <div class="flex justify-between items-end font-director">
+                        <a href="https://www.instagram.com/whereisneonbay/" target="_blank" rel="noopener noreferrer" aria-label="Visiter l'Instagram de Neon Bay" class="text-[9px] xl:text-[11px] 2xl:text-xs uppercase tracking-widest border-b border-current">Lien</a>
+                        <span class="text-[9px] xl:text-[11px] 2xl:text-xs uppercase opacity-60">Goth Rock / Grunge</span>
+                    </div>
+                </div>
+
+                <!-- Concerts -->
+                <div class="md:col-span-2 border-r border-b border-white/10 p-6 bg-white/[0.01] max-h-[800px] overflow-y-auto">
+                    <span class="font-director text-[10px] opacity-50 uppercase tracking-[0.2em] block mb-6">Concerts</span>
+                    <ul class="space-y-3 font-director text-[11px] uppercase tracking-tighter">
+                         <li data-date="2026-11-11" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://dice.fm/event/q2q3xy-aprils-fish-fetish-djohra-11th-nov-le-chinois-paris-tickets?lng=fr" target="_blank" rel="noopener noreferrer" aria-label="Concert Djohra au Chinois" class="text-[11px]">Le Chinois <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Djohra)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">11.11.2026</span>
+                        </li>
+                         <li data-date="2026-09-18" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://dice.fm/event/l87ygw-pam-risouri-release-party-crushing-swans-neon-bay-18th-sep-le-chinois-paris-tickets" target="_blank" rel="noopener noreferrer" aria-label="Concert au Chinois Neon Bay" class="text-[11px]">Le Chinois <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">18.09.2026</span>
+                        </li>
+                        <li data-date="2026-08-19" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://dice.fm/event/v3d2n7-terraplana-orkid-djohra-19th-aug-supersonic-paris-tickets?lng=fr" target="_blank" rel="noopener noreferrer" aria-label="Concert Djohra au Supersonic" class="text-[11px]">Le Supersonic <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Djohra)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">19.08.2026</span>
+                        </li>
+                        <li data-date="2026-08-01" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="" target="_blank" rel="noopener noreferrer" aria-label="Concert Warmest Cyan à la Maz" class="text-[11px]">La Maz <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Warmest Cyan)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">01.08.2026</span>
+                        </li>
+                        <li data-date="2026-06-27" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="" target="_blank" rel="noopener noreferrer" aria-label="Festival de la Télévision Neon Bay" class="text-[11px]">La Télévision <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">27.06.2026</span>
+                        </li>
+                        <li data-date="2026-06-21" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://www.instagram.com/p/DY4Cp7XDfWx/" target="_blank" rel="noopener noreferrer" aria-label="Fête de la musique Neon Bay" class="text-[11px]">La Cave Degré <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">21.06.2026</span>
+                        </li>
+                        <li data-date="2026-06-17" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://shotgun.live/fr/events/kharoub-neon-bay-arthure-arthure" target="_blank" rel="noopener noreferrer" aria-label="Concert à l'AG de Neon Bay" class="text-[11px]">L'Alimentation Générale <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">17.06.2026</span>
+                        </li>
+                        <li data-date="2026-06-09" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://supersonic-club.fr/event/the-smith-street-band/" target="_blank" rel="noopener noreferrer" aria-label="Concert au Supersonic de Neon Bay" class="text-[11px]">Le Supersonic <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">09.06.2026</span>
+                        </li>
+                        <li data-date="2026-05-21" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://shotgun.live/fr/events/djohra-live" target="_blank" rel="noopener noreferrer" aria-label="Concert aux Disquaires de Djohra" class="text-[11px]">Les Disquaires <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Djohra)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">21.05.2026</span>
+                        </li>
+                        <li data-date="2026-04-22" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://shotgun.live/en/events/bandeliers-grundeis-neon-bay" target="_blank" rel="noopener noreferrer" aria-label="Concert au Klub de Neon Bay" class="text-[11px]">Le Klub <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">22.04.2026</span>
+                        </li>
+                        <li data-date="2026-04-03" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://www.helloasso.com/associations/la-television/evenements/03-04-2026-neon-bay-x-feia" target="_blank" rel="noopener noreferrer" aria-label="Concert à la Télévision de Neon Bay" class="text-[11px]">La Télévision <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">03.04.2026</span>
+                        </li>
+                        <li data-date="2026-03-17" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://shotgun.live/fr/events/black-foxxes-uk-guests" target="_blank" rel="noopener noreferrer" aria-label="Voir l'événement Shotgun de Neon Bay" class="text-[11px]">Le Chinois <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">17.03.2026</span>
+                        </li>
+                        <li data-date="2026-02-26" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <a href="https://shotgun.live/fr/events/warmest-cyan-x-alienor-live" target="_blank" rel="noopener noreferrer" aria-label="Voir l'événement Shotgun de Warmest Cyan et Alienor" class="text-[11px]">Les Disquaires <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Warmest Cyan)</span></a>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">26.02.2026</span>
+                        </li>
+                        <li data-date="2026-02-07" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <span class="text-[11px]">La Mécanique Ondulatoire <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Neon Bay)</span></span>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">07.02.2026</span>
+                        </li>
+                        <li data-date="2025-11-21" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <span class="text-[11px]">La Maz <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Warmest Cyan)</span></span>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">21.11.2025</span>
+                        </li>
+                        <li data-date="2024-06-15" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <span class="text-[11px]">Institut du Monde Arabe <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Kohhen El Kef)</span></span>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">15.06.2024</span>
+                        </li>
+                        <li data-date="2023-07-07" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <span class="text-[11px]">Point Fort d'Aubervilliers <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Kohhen El Kef)</span></span>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">07.07.2023</span>
+                        </li>
+                        <li data-date="2023-01-27" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <span class="text-[11px]">Petit Bain <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Kohhen El Kef)</span></span>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">27.01.2023</span>
+                        </li>
+                        <li data-date="2023-01-22" class="flex flex-col md:flex-row justify-between border-b border-white/5 pb-2 md:pb-1 gap-1 md:gap-4">
+                            <span class="text-[11px]">Journées Musicales de Carthage - Tunisie <span class="text-[9px] md:text-[10px] opacity-60 ml-2">(Kohhen El Kef)</span></span>
+                            <span class="opacity-50 whitespace-nowrap text-[9px] xl:text-[11px] 2xl:text-xs self-end md:self-auto">22.01.2023</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Collaborations -->
+                <div class="border-r border-b border-white/10 p-6 bg-white/[0.01]">
+                    <span class="font-director text-[10px] opacity-30 uppercase tracking-[0.2em] block mb-6">Collaborations &amp; Archives</span>
+                    <div class="space-y-6">
+                        <div class="font-director">
+                            <p class="text-[10px] leading-relaxed opacity-60 uppercase">
+                                <a href="https://chezmonplaisir.bandcamp.com/album/300-albumss-8-hours-best-of-of-creative-commons-0-music-o" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">"300 albums's 8 hours Best-Of of Creative Commons 0", Rrrrrose Azerty - 2026</a>
+                            </p>
+                        </div>
+                        <div class="font-director">
+                            <p class="text-[11px] text-white/90 uppercase tracking-widest font-bold">Kohhen El Kef</p>
+                            <p class="text-[9px] opacity-50 uppercase tracking-tighter">Guitariste (2022-2024)</p>
+                            <a href="https://linktr.ee/kohhenelkef" target="_blank" rel="noopener noreferrer" class="text-[9px] border-b border-white/20 hover:border-white transition-all uppercase opacity-60">Lien projet</a>
+                        </div>                        
+                        <div class="font-director">
+                            <p class="text-[10px] leading-relaxed opacity-60 uppercase">
+                                <a href="https://beastienoise.bandcamp.com/album/volume-1" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">"Volume 1", Bae Sessions (Beastie Noise) - 2021</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="p-16 border border-white/10" role="separator" aria-hidden="true"></div>
+
+        <!-- SECTION PARCOURS -->
+        <section id="about" class="p-8 bg-[#0a0a0a] text-white">
+            <h2 class="font-director uppercase tracking-[0.3em] text-3xl mb-20 text-gray-400">Parcours</h2>
+
+            <div class="font-director max-w-3xl space-y-8">
+
+                <div class="space-y-6">
+
+                    <!-- 2008 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative js-experience-row cursor-eye">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">2008</span>
+                        <p class="text-sm">Débuts à la guitare et premières expériences d'enregistrement en autonomie sur DAW (Magix Music Maker, Mixcraft, Cubase).</p>
+                        <div class="js-hover-img absolute left-0 bottom-full mb-4 w-48 h-48 bg-black border border-white/20 opacity-0 transition-opacity duration-300 pointer-events-none z-40 hidden md:block overflow-hidden">
+                            <img src="photos/moi-jeune-guitare.JPG" alt="Yseult jeune joue de la guitare" class="w-full h-full object-cover grayscale opacity-80" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- 2009—2015 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative js-experience-row cursor-eye">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">2009 — 2015</span>
+                        <p class="text-sm">Apprentissage de la guitare et aménagement d'un mini "home-studio" dans ma chambre : enregistrement sur Mixcraft puis Reaper, apprentissage du mixage en autodidacte.</p>
+                        <div class="js-hover-img absolute left-0 bottom-full mb-4 w-48 h-48 bg-black border border-white/20 opacity-0 transition-opacity duration-300 pointer-events-none z-40 hidden md:block overflow-hidden">
+                            <img src="photos/moi-jeune-daw.jpg" alt="Yseult jeune sur DAW" class="w-full h-full object-cover grayscale opacity-80" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- 2015—2018 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative cursor-eye">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">2015 — 2018</span>
+                        <p class="text-sm">Faculté de Mathématiques-Informatique. Acquisition des bases théoriques en algorithmique et structures de données.</p>
+                    </div>
+
+                    <!-- 2019—2020 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative cursor-eye">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">2019 — 2020</span>
+                        <p class="text-sm">Création de Djohra et autoproduction d'une maquette.</p>
+                    </div>
+
+                    <!-- Depuis 2021 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative js-experience-row cursor-eye">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">Depuis 2021</span>
+                        <p class="text-sm">Régisseuse son en école de musique. Gestion du studio d'enregistrement, maintenance matériel, audit et maintenance du système informatique.</p>
+                        <div class="js-hover-img absolute left-0 bottom-full mb-4 w-48 h-48 bg-black border border-white/20 opacity-0 transition-opacity duration-300 pointer-events-none z-40 hidden md:block overflow-hidden">
+                            <img src="photos/regie-mustang.jpg" alt="Régie son Musiques Tangentes" class="w-full h-full object-cover grayscale" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Novembre 2024 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative cursor-eye">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">Novembre 2024</span>
+                        <p class="text-sm font-medium">Animation d'un atelier d'initiation à la sonorisation en mixité choisie, en partenariat avec Beat &amp; Beer et le RIF 92.</p>
+                    </div>
+
+                    <!-- Depuis 2024 -->
+                    <div class="flex flex-col md:flex-row gap-1 md:gap-12 pb-10 md:pb-6 relative cursor-crosshair js-experience-row">
+                        <span class="text-[10px] font-bold md:w-24 shrink-0 uppercase tracking-widest">Depuis 2024</span>
+                        <p class="text-sm font-medium">Reprise intensive du développement web : conception de systèmes complets en Vanilla PHP, développement d'applications métiers sur-mesure, gestion de bases de données relationnelles normalisées, implémentation de services tiers (Stripe, Google API).</p>
+                    </div>
+
+                </div>
+
+                <div class="pt-4">
+                    <p class="text-xs leading-relaxed opacity-70 tracking-tighter">
+                        J'appuie ma pratique du développement sur la logique acquise en mathématiques et le pragmatisme du terrain propre à la régie son. Mon choix de travailler en "vanilla" répond à une volonté de simplicité et de transparence : créer des outils performants, souverains et faciles à maintenir sur le long terme.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div
+        id="lightbox"
+        class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-2xl items-center justify-center p-4 md:p-16"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Prévisualisation du projet"
+    >
+        <button
+            id="lightbox-close"
+            class="fixed top-8 right-8 text-white font-director text-xs tracking-widest uppercase z-[110] hover:line-through text-shadow-mobile"
+            aria-label="Fermer la prévisualisation"
+        >
+            [ Fermer_X ]
+        </button>
+        <div
+            id="lightbox-inner"
+            class="w-full max-w-5xl overflow-y-auto bg-black border border-white/5 shadow-2xl max-h-[90vh]"
+        >
+            <img id="lightbox-img" src="" alt="" class="w-full h-auto">
+        </div>
+    </div>
+
+    <button
+        id="backToTop"
+        class="fixed bottom-8 right-8 w-10 h-10 bg-white text-black border border-black/10 rounded-full flex items-center justify-center opacity-0 translate-y-10 transition-all duration-500 z-50 hover:bg-black hover:text-white pointer-events-none"
+        aria-label="Retour en haut de page"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <footer class="bg-[#f8f8f8] border-t border-gray-200 py-6">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-medium">
+                <div class="order-2 md:order-1">
+                    <span id="year"></span> © Yseult Djohra
+                </div>
+                <div class="flex items-center space-x-4 order-1 md:order-2">
+                    <a href="mentions-legales.php" class="hover:text-black transition-colors duration-300">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        'use strict';
+
+        const isMobile = () => !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        /* Custom cursor (desktop uniquement) */
+        const cursor = document.getElementById('custom-cursor');
+        if (cursor && !isMobile()) {
+            cursor.style.display = 'block';
+
+            document.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top  = e.clientY + 'px';
+                });
+            }, { passive: true });
+
+            document.querySelectorAll('a, button, .preview-container').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('enlarged'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('enlarged'));
+            });
+        }
+
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                const show = window.scrollY > 500;
+                backToTop.classList.toggle('opacity-100', show);
+                backToTop.classList.toggle('translate-y-0', show);
+                backToTop.classList.toggle('pointer-events-auto', show);
+                backToTop.classList.toggle('opacity-0', !show);
+                backToTop.classList.toggle('translate-y-10', !show);
+                backToTop.classList.toggle('pointer-events-none', !show);
+            }, { passive: true });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        /* Lightbox */
+        const lightbox      = document.getElementById('lightbox');
+        const lightboxImg   = document.getElementById('lightbox-img');
+        const lightboxInner = document.getElementById('lightbox-inner');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        function openLightbox(src, alt) {
+            if (!lightbox || !lightboxImg) return;
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+
+            requestAnimationFrame(() => {
+                if (lightboxClose) lightboxClose.focus();
+            });
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            if (!lightbox) return;
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        lightbox && lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        lightboxClose && lightboxClose.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        /* Preview containers */
+        document.querySelectorAll('.preview-container').forEach(container => {
+            const img = container.querySelector('img');
+            if (!img) return;
+
+            container.addEventListener('click', () => {
+                if (!isMobile()) {
+                    openLightbox(img.src, img.alt);
+                } else {
+                    const scrollDist = img.offsetHeight - container.offsetHeight;
+                    if (scrollDist <= 0) return;
+
+                    const isScrolled = container.dataset.scrolled === 'true';
+                    const target = isScrolled ? '0px' : `-${scrollDist}px`;
+
+                    img.style.transition = 'transform 4s ease-in-out';
+                    img.style.transform  = `translateY(${target})`;
+                    container.dataset.scrolled = isScrolled ? 'false' : 'true';
+                }
+            });
+
+            container.setAttribute('tabindex', '0');
+            container.setAttribute('role', 'button');
+            container.setAttribute('aria-label', 'Agrandir l\'aperçu');
+            container.addEventListener('keydown', (e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && !isMobile()) {
+                    e.preventDefault();
+                    openLightbox(img.src, img.alt);
+                }
+            });
+        });
+
+        /* Dates concerts passées */
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            document.querySelectorAll('li[data-date]').forEach(li => {
+                const eventDate = new Date(li.dataset.date);
+                if (eventDate < today) {
+                    li.classList.add('opacity-50', 'grayscale');
+                }
+            });
+        });
+
+        /* Hover photos parcours */
+        document.querySelectorAll('.js-experience-row').forEach(row => {
+            const imgContainer = row.querySelector('.js-hover-img');
+            if (!imgContainer) return;
+
+            row.addEventListener('mousemove', (e) => {
+                if (isMobile()) return;
+                const rect = row.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                imgContainer.style.left = Math.min(x + 20, rect.width - 210) + 'px';
+                imgContainer.classList.remove('opacity-0');
+                imgContainer.classList.add('opacity-100');
+            }, { passive: true });
+
+            row.addEventListener('mouseleave', () => {
+                imgContainer.classList.remove('opacity-100');
+                imgContainer.classList.add('opacity-0');
+            });
+        });
+
+    })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yseult Roquet | Site web</title>
+    <meta name="robots" content="noindex,follow">
+    <meta name="classification" content="webdeveloppement, developpeuse, developpement, sql, php, html, css, musicienne, guitariste, musique">
+    <meta name="description" content="Yseult Roquet est développeuse full-stack et musicienne.">
+    <meta name="copyright" content="Yseult Roquet">
+    <link rel="canonical" href="https://www.yseultroquet.fr/">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link href="dist/output.css" rel="stylesheet">
+
+    <style>
+        @font-face {
+        font-family: 'Trickster';
+        src: url('fonts/Trickster-Reg.otf') format('opentype');
+        src: url('fonts/Trickster-Reg.ttf') format('truetype'),
+            url('fonts/Trickster-Regular.woff') format('woff'),
+            url('fonts/Trickster-Regular.woff2') format('woff2');
+        font-style: normal;
+        }
+        @font-face {
+        font-family: 'Director-Light';
+        src: url('fonts/Director-Light.otf') format('opentype');
+        src: url('fonts/Director-Light.ttf') format('truetype'),
+            url('fonts/Director-Light.woff') format('woff'),
+            url('fonts/Director-Light.woff2') format('woff2');
+        font-style: normal;
+        }
+        @font-face {
+        font-family: 'Basalte';
+        src: url('fonts/Basalte-Fond.otf') format('opentype');
+        src: url('fonts/Basalte-Fond.ttf') format('truetype'),
+            url('fonts/Basalte-Fond.woff') format('woff'),
+            url('fonts/Basalte-Fond.woff2') format('woff2');
+        font-style: normal;
+        }
+        html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+        body { font-family: 'Director-Light', sans-serif; }
+        h1 { font-family: 'Trickster', sans-serif; }
+        h2 { font-family: 'Trickster', sans-serif; }
+        h3, h4 { font-family: 'Basalte', sans-serif; }
+        h5 { font-family: 'Director-Light', sans-serif; }
+        p, li { font-family: 'Director-Light', sans-serif; }
+        .preview-container img { transition: transform 8s ease-in-out; transform: translateY(0); }
+        .preview-container:hover img { transform: translateY(calc(-100% + 400px)); }
+    </style>
+
+</head>
+
+<body class="bg-white antialiased">
+
+    <header class="w-full p-6 border-b border-black/5 font-director flex justify-between items-center sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <a href="index.php" class="text-[10px] uppercase tracking-widest hover:line-through transition-all flex items-center gap-2">
+            <span class="text-lg">←</span> Retour au site
+        </a>
+        <span class="text-[9px] opacity-30 uppercase tracking-[0.3em]">Yseult Roquet // Mentions légales</span>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-20 md:py-32">
+
+        <section id="legal" class="p-8 bg-white text-black font-director max-w-3xl mx-auto">
+            <h2 class="text-2xl font-bold uppercase tracking-widest border-b-2 border-black pb-2 mb-8">Mentions Légales</h2>
+            
+            <div class="space-y-6 text-[11px] leading-relaxed uppercase">
+                <div>
+                    <h3 class="font-bold mb-1">[ 01_ÉDITION ]</h3>
+                    <p>Ce site est édité par Yseult Roquet.<br>
+                    Contact : contact@yseultroquet.fr<br>
+                    Domiciliée à : Malakoff, Hauts-de-Seine</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-1">[ 02_HÉBERGEMENT ]</h3>
+                    <p>Le site est hébergé par :<br>
+                        OVH SAS<br>
+                        2 rue Kellermann, 59100 Roubaix, France<br>
+                        RCS Lille Métropole 424 761 419
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-1">[ 03_PROPRIÉTÉ INTELLECTUELLE ]</h3>
+                    <p>L'ensemble des contenus (textes, images, codes sources, musiques) présents sur ce site est la propriété exclusive de l'éditrice, sauf mention contraire. Toute reproduction, même partielle, est interdite sans accord préalable.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-1">[ 04_DONNÉES PERSONNELLES ]</h3>
+                    <p>Ce site ne collecte aucune donnée utilisateur via des cookies tiers ou des outils de tracking. Il n'utilise aucun formulaire de contact stockant des informations en base de données.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-1">[ 05_CRÉDITS ]</h3>
+                    <p>Typographies : Trickster, Director, Basalte (<a href="https://velvetyne.fr/" aria-label="Site de Velvetyne">Velvetyne Type Foundry</a>).<br>
+                    Développement & Design : Yseult Roquet.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-2xl flex justify-center p-4 md:p-16 transition-opacity duration-500" onclick="closeLightbox()">
+        <button class="fixed top-8 right-8 text-white font-director text-xs tracking-widest uppercase z-[110] hover:line-through">
+            [ Fermer_X ]
+        </button>
+        <div class="w-full max-w-5xl overflow-y-auto bg-black border border-white/5 shadow-2xl" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" class="w-full h-auto">
+        </div>
+    </div>
+
+    <footer class="bg-gray-50 border-t border-gray-200 pb-8 pt-8 flex justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium">
+        <?php include 'inc/footer.html'; ?>
+    </footer>
+    
+    </body>
+
+</html>
